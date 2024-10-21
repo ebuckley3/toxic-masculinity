@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toxic Masculinity Traits Survey</title>
+    <style>
+        body {
+            font-family: 'Impact', sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+        h1 {
+            text-align: center;
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+        .category {
+            margin-bottom: 30px;
+        }
+        .category h2 {
+            color: #ff0000;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 5px;
+        }
+        .question {
+            margin: 15px 0;
+        }
+        label {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        .results {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .results h2 {
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+        .results p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Toxic Masculinity Traits Survey</h1>
+        <div id="survey"></div>
+        <button onclick="displayResults()">Submit</button>
+        <div id="results" class="results"></div>
+    </div>
+    <script>
+        const jsonData = {
+            "categories": [
+                {
+                    "name": "Emotional Suppression and Vulnerability",
+                    "questions": [
+                        "Do you believe men should never cry in front of others?",
+                        "Do you think showing emotions is a sign of weakness for men?",
+                        "Do you believe men should suppress their fears?",
+                        "Do you feel embarrassed when someone sees you being vulnerable?",
+                        "Do you think men should solve their problems without relying on others?",
+                        "Do you avoid talking about your mental health with others?",
+                        "Do you think men should never ask for help?",
+                        "Do you think men should keep their emotional needs to themselves?",
+                        "Do you think it's inappropriate for men to share their emotional burdens?",
+                        "Do you avoid crying even when you are deeply hurt?"
+                    ]
+                },
+                {
+                    "name": "Dominance, Power, and Control",
+                    "questions": [
+                        "Do you think men should always take charge in relationships?",
+                        "Do you think men should always be in control of situations?",
+                        "Do you believe that men should always take risks without considering the consequences?",
+                        "Do you feel the need to assert your authority over others to feel respected?",
+                        "Do you feel uncomfortable letting your female partner make important decisions?",
+                        "Do you think men should be embarrassed to show compassion for animals?",
+                        "Do you think it's a man’s duty to be the sole protector of his family?",
+                        "Do you feel the need to boast about your achievements to feel manly?",
+                        "Do you think men should dominate decision-making in the household?",
+                        "Do you think it’s a man’s duty to control his partner’s behavior?"
+                    ]
+                }
+                // More categories can be added here.
+            ]
+        };
+
+        function getRandomItems(arr, num) {
+            const shuffled = [...arr].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, num);
+        }
+
+        function createSurvey(jsonData) {
+            const surveyContainer = document.getElementById('survey');
+            jsonData.categories.forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.classList.add('category');
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.textContent = category.name;
+                categoryDiv.appendChild(categoryTitle);
+
+                const randomQuestions = getRandomItems(category.questions, 5);
+                randomQuestions.forEach(question => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question');
+
+                    const questionText = document.createElement('p');
+                    questionText.textContent = question;
+                    questionDiv.appendChild(questionText);
+
+                    ['Yes', 'No', 'Sometimes'].forEach(option => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = question;
+                        radio.value = option;
+                        radio.addEventListener('change', () => handleRatingChange(category.name, question, option));
+                        label.appendChild(radio);
+                        label.appendChild(document.createTextNode(option));
+                        questionDiv.appendChild(label);
+                    });
+
+                    categoryDiv.appendChild(questionDiv);
+                });
+
+                surveyContainer.appendChild(categoryDiv);
+            });
+        }
+
+        const categoryRatings = {};
+
+        function handleRatingChange(category, question, rating) {
+            if (!categoryRatings[category]) {
+                categoryRatings[category] = {
+                    yesCount: 0,
+                    questions: {}
+                };
+            }
+
+            const questionRating = categoryRatings[category].questions[question];
+            if (questionRating === 'Yes' && rating !== 'Yes') {
+                categoryRatings[category].yesCount--;
+            } else if (rating === 'Yes' && questionRating !== 'Yes') {
+                categoryRatings[category].yesCount++;
+            }
+
+            categoryRatings[category].questions[question] = rating;
+            console.log(categoryRatings);
+        }
+
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            // Sort categories based on the yesCount
+            const sortedCategories = Object.keys(categoryRatings).sort((a, b) => categoryRatings[b].yesCount - categoryRatings[a].yesCount);
+            
+            // Get the top 3 categories
+            const topCategories = sortedCategories.slice(0, 3);
+            
+            const resultHeader = document.createElement('h2');
+            resultHeader.textContent = "These are the areas that need the most work.";
+            resultsDiv.appendChild(resultHeader);
+            
+            topCategories.forEach(category => {
+                const categoryResult = document.createElement('p');
+                categoryResult.textContent = `${category}: ${categoryRatings[category].yesCount} Yes responses`;
+                resultsDiv.appendChild(categoryResult);
+            });
+        }
+
+        createSurvey(jsonData);
+    </script>
+</body>
+</html>
