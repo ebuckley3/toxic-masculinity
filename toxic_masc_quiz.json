@@ -1,0 +1,95 @@
+{
+    "categories": [
+      {
+        "name": "Emotional Suppression and Vulnerability",
+        "questions": [
+          "Do you believe men should never cry in front of others?",
+          "Do you think showing emotions is a sign of weakness for men?",
+          "Do you believe men should suppress their fears?",
+          "Do you feel embarrassed when someone sees you being vulnerable?",
+          "Do you think men should solve their problems without relying on others?",
+          "Do you avoid talking about your mental health with others?",
+          "Do you think men should never ask for help?",
+          "Do you think men should keep their emotional needs to themselves?",
+          "Do you think it's inappropriate for men to share their emotional burdens?",
+          "Do you avoid crying even when you are deeply hurt?"
+        ]
+      },
+      {
+        "name": "Dominance, Power, and Control",
+        "questions": [
+          "Do you think men should always take charge in relationships?",
+          "Do you think men should always be in control of situations?",
+          "Do you believe that men should always take risks without considering the consequences?",
+          "Do you feel the need to assert your authority over others to feel respected?",
+          "Do you feel uncomfortable letting your female partner make important decisions?",
+          "Do you think men should be embarrassed to show compassion for animals?",
+          "Do you think it's a man’s duty to be the sole protector of his family?",
+          "Do you feel the need to boast about your achievements to feel manly?",
+          "Do you think men should dominate decision-making in the household?",
+          "Do you think it’s a man’s duty to control his partner’s behavior?"
+        ]
+      },
+      {
+        "name": "Aggression and Competitiveness",
+        "questions": [
+          "Do you believe that being aggressive makes you more of a man?",
+          "Do you think men who avoid physical confrontation are cowardly?",
+          "Do you think using violence is sometimes necessary to maintain respect?",
+          "Do you think men should be aggressive in pursuit of what they want?",
+          "Do you feel the need to challenge others to prove your strength?",
+          "Do you feel like you need to assert dominance in conversations?",
+          "Do you think men should be competitive in all aspects of life?",
+          "Do you avoid apologizing, fearing it makes you look weak?",
+          "Do you feel uncomfortable when a woman outperforms you?",
+          "Do you think men should avoid talking about gender equality?"
+        ]
+      },
+      {
+        "name": "Perceptions of Masculinity",
+        "questions": [
+          "Do you avoid activities that are considered 'feminine'?",
+          "Do you think it is shameful for men to be interested in fashion?",
+          "Do you think men should never engage in traditionally feminine hobbies?",
+          "Do you believe that activities like knitting or baking are not suitable for men?",
+          "Do you think a man's masculinity is defined by having physical strength?",
+          "Do you think it’s embarrassing if a man likes rom-com movies?",
+          "Do you feel uncomfortable seeing men hug each other?",
+          "Do you believe that having multiple sexual partners proves masculinity?",
+          "Do you think men should not care about their appearance?",
+          "Do you think skincare or self-care isn’t something men should do?"
+        ]
+      },
+      {
+        "name": "Relationships and Emotional Distance",
+        "questions": [
+          "Do you think men should always take the lead in romantic relationships?",
+          "Do you feel uncomfortable when a woman pays for a date?",
+          "Do you think men shouldn’t admit if they need help from others?",
+          "Do you avoid showing affection toward your partner?",
+          "Do you think women should be submissive in relationships?",
+          "Do you feel uncomfortable seeing men being affectionate towards babies?",
+          "Do you think men shouldn't be gentle, and instead always appear 'tough'?",
+          "Do you think men should avoid expressing emotions even in relationships?",
+          "Do you believe women should not have equal say in relationships?",
+          "Do you think men should only express physical affection toward women?"
+        ]
+      },
+      {
+        "name": "Expectations Regarding Gender Roles",
+        "questions": [
+          "Do you think men should never be involved in housework?",
+          "Do you think men should be embarrassed to show nurturing qualities?",
+          "Do you think men should always be the protectors in a household?",
+          "Do you think it is wrong for men to show empathy?",
+          "Do you feel uncomfortable with men in traditionally female-oriented roles?",
+          "Do you think men shouldn’t be interested in fashion or beauty?",
+          "Do you believe it’s unnatural for men to stay at home and take care of the family?",
+          "Do you think men who take paternity leave are neglecting their responsibilities?",
+          "Do you think childcare is primarily a woman's role and not a man's?",
+          "Do you think that emotional vulnerability should be reserved for women?"
+        ]
+      }
+    ]
+  }
+  
