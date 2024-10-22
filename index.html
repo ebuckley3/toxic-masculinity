@@ -38,7 +38,6 @@
         }
         label {
             margin-right: 15px;
-            font-weight: bold;
         }
         button {
             display: block;
@@ -171,6 +170,29 @@
             ]
         };
 
+        const books = [
+            "The Will to Change: Men, Masculinity, and Love by bell hooks",
+            "Man Enough: Undefining My Masculinity by Justin Baldoni",
+            "Raising Cain: Protecting the Emotional Life of Boys by Dan Kindlon and Michael Thompson",
+            "Daring Greatly by Brené Brown",
+            "Guyland: The Perilous World Where Boys Become Men by Michael Kimmel",
+            "The Mask of Masculinity: How Men Can Embrace Vulnerability, Create Strong Relationships, and Live Their Fullest Lives by Lewis Howes",
+            "Decolonizing Masculinity edited by Sergio Quiroga and Frederick Douglass Lynch",
+            "Men Explain Things to Me by Rebecca Solnit",
+            "The Descent of Man by Grayson Perry",
+            "Deep Secrets: Boys' Friendships and the Crisis of Connection by Niobe Way",
+            "Invisible Man by Ralph Ellison",
+            "The End of Patriarchy: Radical Feminism for Men by Robert Jensen",
+            "Feminism is for Everybody: Passionate Politics by bell hooks",
+            "How to Be an Antiracist by Ibram X. Kendi",
+            "Men and Feminism by Shira Tarrant",
+            "Normal Sucks: How to Live, Learn, and Thrive Outside the Lines by Jonathan Mooney",
+            "Becoming a Man: Half a Life Story by Paul Monette",
+            "No Ashes in the Fire: Coming of Age Black and Free in America by Darnell L. Moore",
+            "I Don’t Want to Talk About It: Overcoming the Secret Legacy of Male Depression by Terrence Real",
+            "Dude, You're a Fag: Masculinity and Sexuality in High School by C.J. Pascoe"
+        ];
+
         function getRandomItems(arr, num) {
             const shuffled = [...arr].sort(() => 0.5 - Math.random());
             return shuffled.slice(0, num);
@@ -226,38 +248,4 @@
             const questionRating = categoryRatings[category].questions[question];
             if (questionRating === 'Yes' && rating !== 'Yes') {
                 categoryRatings[category].yesCount--;
-            } else if (rating === 'Yes' && questionRating !== 'Yes') {
-                categoryRatings[category].yesCount++;
-            }
-
-            categoryRatings[category].questions[question] = rating;
-            console.log(categoryRatings);
-        }
-
-        function displayResults() {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-            
-            // Sort categories based on the yesCount
-            const sortedCategories = Object.keys(categoryRatings).sort((a, b) => categoryRatings[b].yesCount - categoryRatings[a].yesCount);
-            
-            // Get the top 3 categories
-            const topCategories = sortedCategories.slice(0, 3);
-            
-            const resultHeader = document.createElement('h2');
-            resultHeader.textContent = "These are the areas that need the most work.";
-            resultsDiv.appendChild(resultHeader);
-            
-            topCategories.forEach(category => {
-                const categoryResult = document.createElement('p');
-                categoryResult.textContent = `${category}: ${categoryRatings[category].yesCount} Yes responses`;
-                resultsDiv.appendChild(categoryResult);
-            });
-        }
-        
-
-        createSurvey(jsonData);
-    </script>
-</body>
-</html>
-
+            } else if (rating === 'Yes' && questionRating !== 'Yes
