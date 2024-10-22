@@ -248,4 +248,73 @@
             const questionRating = categoryRatings[category].questions[question];
             if (questionRating === 'Yes' && rating !== 'Yes') {
                 categoryRatings[category].yesCount--;
-            } else if (rating === 'Yes' && questionRating !== 'Yes
+            } else if (rating === 'Yes' && questionRating !== 'Yes') {
+                categoryRatings[category].yesCount++;
+            }
+
+            categoryRatings[category].questions[question] = rating;
+            console.log(categoryRatings);
+        }
+
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            // Sort categories based on the yesCount
+            const sortedCategories = Object.keys(categoryRatings).sort((a, b) => categoryRatings[b].yesCount - categoryRatings[a].yesCount);
+            
+            // Get the top 3 categories
+            const topCategories = sortedCategories.slice(0, 3);
+            
+            if (topCategories.length > 0) {
+                const resultHeader = document.createElement('h2');
+                resultHeader.textContent = "These are the areas that need the most work.";
+                resultsDiv.appendChild(resultHeader);
+                
+                topCategories.forEach(category => {
+                    const categoryResult = document.createElement('p');
+                    categoryResult.textContent = `${category}: ${categoryRatings[category].yesCount} Yes responses`;
+                    resultsDiv.appendChild(categoryResult);
+                });
+            }
+            
+            // If 0-4 questions have been answered with Yes, show congratulatory message and book recommendations
+            let totalYesCount = 0;
+            Object.values(categoryRatings).forEach(category => {
+                totalYesCount += category.yesCount;
+            });
+            
+            if (totalYesCount <= 4) {
+                const congratsHeader = document.createElement('h2');
+                congratsHeader.textContent = "Congratulations! You have broken free of hegemonic masculinity.";
+                resultsDiv.appendChild(congratsHeader);
+                
+                const congratsText = document.createElement('p');
+                congratsText.textContent = "Consider reading one of these books to further your understanding of hegemonic masculinity in American culture and learn how you can help others break the cycle.";
+                resultsDiv.appendChild(congratsText);
+                
+                const recommendedBooks = getRandomItems(books, 3);
+                recommendedBooks.forEach(book => {
+                    const bookItem = document.createElement('p');
+                    bookItem.textContent = book;
+                    resultsDiv.appendChild(bookItem);
+                });
+            } else if (totalYesCount > 5) {
+                // Recommend books if more than 5 questions have been answered with Yes
+                const bookHeader = document.createElement('h2');
+                bookHeader.textContent = "Recommended Reading";
+                resultsDiv.appendChild(bookHeader);
+                
+                const recommendedBooks = getRandomItems(books, 3);
+                recommendedBooks.forEach(book => {
+                    const bookItem = document.createElement('p');
+                    bookItem.textContent = book;
+                    resultsDiv.appendChild(bookItem);
+                });
+            }
+        }
+        
+        createSurvey(jsonData);
+    </script>
+</body>
+</html>
