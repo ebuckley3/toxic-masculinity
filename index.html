@@ -70,6 +70,24 @@
             font-size: 1.2em;
             font-weight: normal;
         }
+        /* Styles for the bar chart */
+        .chart {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .chart div {
+            background-color: #ff0000;
+            margin: 5px 0;
+            height: 24px;
+            line-height: 24px;
+            color: #fff;
+            padding-left: 10px;
+            border-radius: 5px;
+        }
+        .chart-label {
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -305,44 +323,56 @@
                     bookItem.textContent = book;
                     resultsDiv.appendChild(bookItem);
                 });
-            } else if (totalAffirmativeResponses >= 1 && totalAffirmativeResponses <= 10) {
-                const messageHeader = document.createElement('h2');
-                messageHeader.textContent = "You may realize that toxic masculinity can be problematic.";
-                resultsDiv.appendChild(messageHeader);
-
-                const messageText = document.createElement('p');
-                messageText.textContent = "But it's difficult to avoid in today's society. You can break free from it by reading more about its negative impact. Here are some book suggestions:";
-                resultsDiv.appendChild(messageText);
-
-                const recommendedBooks = getRandomItems(books, 3);
-                recommendedBooks.forEach(book => {
-                    const bookItem = document.createElement('p');
-                    bookItem.textContent = book;
-                    resultsDiv.appendChild(bookItem);
-                });
             } else {
-                // Sort categories based on the total affirmative responses
-                const sortedCategories = Object.keys(categoryRatings).sort((a, b) => {
-                    const bTotal = categoryRatings[b].yesCount + categoryRatings[b].sometimesCount;
-                    const aTotal = categoryRatings[a].yesCount + categoryRatings[a].sometimesCount;
-                    return bTotal - aTotal;
+                // Calculate affirmative responses per category
+                const categoryAffirmatives = {};
+                for (const category in categoryRatings) {
+                    const yesCount = categoryRatings[category].yesCount;
+                    const sometimesCount = categoryRatings[category].sometimesCount;
+                    const totalAffirmative = yesCount + sometimesCount;
+                    categoryAffirmatives[category] = totalAffirmative;
+                }
+
+                // Get categories with affirmative responses
+                const categoriesNeedingWork = Object.keys(categoryAffirmatives).filter(category => categoryAffirmatives[category] > 0);
+
+                if (categoriesNeedingWork.length > 1) {
+                    const resultHeader = document.createElement('h2');
+                    resultHeader.textContent = "These are the areas that need the most work:";
+                    resultsDiv.appendChild(resultHeader);
+                } else if (categoriesNeedingWork.length === 1) {
+                    const resultHeader = document.createElement('h2');
+                    resultHeader.textContent = "This is the category that needs work:";
+                    resultsDiv.appendChild(resultHeader);
+                }
+
+                // Display categories and counts
+                categoriesNeedingWork.forEach(category => {
+                    const categoryResult = document.createElement('p');
+                    categoryResult.textContent = `${category}: ${categoryAffirmatives[category]} Yes/Sometimes responses`;
+                    resultsDiv.appendChild(categoryResult);
                 });
 
-                // Get the top 3 categories
-                const topCategories = sortedCategories.slice(0, 3);
+                // Create bar chart
+                const chartDiv = document.createElement('div');
+                chartDiv.classList.add('chart');
 
-                if (topCategories.length > 0) {
-                    const resultHeader = document.createElement('h2');
-                    resultHeader.textContent = "These are the areas that need the most work.";
-                    resultsDiv.appendChild(resultHeader);
+                for (const category in categoryAffirmatives) {
+                    const barContainer = document.createElement('div');
+                    const barLabel = document.createElement('div');
+                    barLabel.textContent = `${category} (${categoryAffirmatives[category]})`;
+                    barLabel.classList.add('chart-label');
 
-                    topCategories.forEach(category => {
-                        const totalAffirmative = categoryRatings[category].yesCount + categoryRatings[category].sometimesCount;
-                        const categoryResult = document.createElement('p');
-                        categoryResult.textContent = `${category}: ${totalAffirmative} Yes/Sometimes responses`;
-                        resultsDiv.appendChild(categoryResult);
-                    });
+                    const bar = document.createElement('div');
+                    bar.style.width = `${(categoryAffirmatives[category] / 5) * 100}%`;
+                    bar.textContent = '';
+
+                    barContainer.appendChild(barLabel);
+                    barContainer.appendChild(bar);
+                    chartDiv.appendChild(barContainer);
                 }
+
+                resultsDiv.appendChild(chartDiv);
 
                 // Recommend books
                 const bookHeader = document.createElement('h2');
