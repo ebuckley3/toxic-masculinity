@@ -77,17 +77,25 @@
             justify-content: center;
             align-items: flex-end;
             height: 300px;
+            border-left: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            padding-left: 20px;
+        }
+        .bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 15px;
         }
         .bar {
-            width: 60px; /* Made bars 3 times as wide */
-            margin: 0 10px;
+            width: 60px;
             background-color: #ff0000;
             display: flex;
             align-items: flex-end;
             justify-content: center;
             border-radius: 5px 5px 0 0;
         }
-        .bar p {
+        .bar-value {
             margin: 0;
             padding: 5px 0;
             font-size: 14px;
@@ -377,15 +385,13 @@
                 chartDiv.classList.add('chart');
 
                 const maxResponsesPerCategory = 5; // Since we display 5 questions per category
+
                 for (const category of jsonData.categories) {
                     const categoryName = category.name;
                     const totalAffirmative = categoryAffirmatives[categoryName];
 
                     const barContainer = document.createElement('div');
-                    barContainer.style.display = 'flex';
-                    barContainer.style.flexDirection = 'column';
-                    barContainer.style.alignItems = 'center';
-                    barContainer.style.margin = '0 10px';
+                    barContainer.classList.add('bar-container');
 
                     const bar = document.createElement('div');
                     bar.classList.add('bar');
@@ -394,6 +400,7 @@
 
                     const barValue = document.createElement('p');
                     barValue.textContent = totalAffirmative;
+                    barValue.classList.add('bar-value');
                     bar.appendChild(barValue);
 
                     const barLabel = document.createElement('div');
