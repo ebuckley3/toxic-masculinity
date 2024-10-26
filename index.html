@@ -88,6 +88,10 @@
             margin-bottom: 5px;
             font-weight: normal;
         }
+        /* New class to align text to the left */
+        .left-align {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -321,6 +325,7 @@
                 recommendedBooks.forEach(book => {
                     const bookItem = document.createElement('p');
                     bookItem.textContent = book;
+                    bookItem.classList.add('left-align');
                     resultsDiv.appendChild(bookItem);
                 });
             } else {
@@ -350,6 +355,7 @@
                 categoriesNeedingWork.forEach(category => {
                     const categoryResult = document.createElement('p');
                     categoryResult.textContent = `${category}: ${categoryAffirmatives[category]} Yes/Sometimes responses`;
+                    categoryResult.classList.add('left-align');
                     resultsDiv.appendChild(categoryResult);
                 });
 
@@ -383,6 +389,7 @@
                 recommendedBooks.forEach(book => {
                     const bookItem = document.createElement('p');
                     bookItem.textContent = book;
+                    bookItem.classList.add('left-align');
                     resultsDiv.appendChild(bookItem);
                 });
             }
