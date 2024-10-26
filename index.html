@@ -74,6 +74,10 @@
         .left-align {
             text-align: left;
         }
+        /* Bold text class */
+        .bold-text {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -310,43 +314,24 @@
                     bookItem.classList.add('left-align');
                     resultsDiv.appendChild(bookItem);
                 });
-            } else {
-                // Calculate affirmative responses per category
-                const categoryAffirmatives = {};
-                for (const category of jsonData.categories) {
-                    const categoryName = category.name;
-                    const ratings = categoryRatings[categoryName];
-                    const yesCount = ratings ? ratings.yesCount : 0;
-                    const sometimesCount = ratings ? ratings.sometimesCount : 0;
-                    const totalAffirmative = yesCount + sometimesCount;
-                    categoryAffirmatives[categoryName] = totalAffirmative;
-                }
+            } else if (totalAffirmativeResponses >= 1 && totalAffirmativeResponses <= 5) {
+                const messageHeader = document.createElement('h2');
+                messageHeader.textContent = "You have some beliefs that could be considered traits of toxic masculinity. It's so entrenched in American culture that it can be hard to avoid. Here are some book selections to break free from toxic masculinity:";
+                messageHeader.style.fontWeight = 'bold';
+                resultsDiv.appendChild(messageHeader);
 
-                // Get categories with affirmative responses
-                const categoriesNeedingWork = Object.keys(categoryAffirmatives).filter(category => categoryAffirmatives[category] > 0);
-
-                if (categoriesNeedingWork.length > 1) {
-                    const resultHeader = document.createElement('h2');
-                    resultHeader.textContent = "These are the areas that need the most work:";
-                    resultsDiv.appendChild(resultHeader);
-                } else if (categoriesNeedingWork.length === 1) {
-                    const resultHeader = document.createElement('h2');
-                    resultHeader.textContent = "This is the category that needs work:";
-                    resultsDiv.appendChild(resultHeader);
-                }
-
-                // Display categories and counts
-                categoriesNeedingWork.forEach(category => {
-                    const categoryResult = document.createElement('p');
-                    categoryResult.textContent = `${category}: ${categoryAffirmatives[category]} Yes/Sometimes responses`;
-                    categoryResult.classList.add('left-align');
-                    resultsDiv.appendChild(categoryResult);
+                const recommendedBooks = getRandomItems(books, 3);
+                recommendedBooks.forEach(book => {
+                    const bookItem = document.createElement('p');
+                    bookItem.textContent = book;
+                    bookItem.classList.add('left-align');
+                    resultsDiv.appendChild(bookItem);
                 });
-
-                // Recommend books
-                const bookHeader = document.createElement('h2');
-                bookHeader.textContent = "Recommended Reading";
-                resultsDiv.appendChild(bookHeader);
+            } else if (totalAffirmativeResponses >= 6) {
+                const messageHeader = document.createElement('h2');
+                messageHeader.textContent = "You have many beliefs that could be considered toxic masculinity and may view these traits as a part of your core values. Consider these book suggestions to learn about the impact of toxic masculinity on society and how you can break free from it:";
+                messageHeader.style.fontWeight = 'bold';
+                resultsDiv.appendChild(messageHeader);
 
                 const recommendedBooks = getRandomItems(books, 3);
                 recommendedBooks.forEach(book => {
