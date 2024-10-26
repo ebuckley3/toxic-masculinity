@@ -7,7 +7,7 @@
         body {
             font-family: 'Arial', sans-serif;
             background-color: #111;
-            color: #fff;
+            color: #fff; /* Ensured all text is white */
             margin: 0;
             padding: 20px;
         }
@@ -22,7 +22,7 @@
         h1 {
             text-align: center;
             color: #ff0000;
-            text-transform: uppercase;
+            /* Removed text-transform: uppercase */
             font-weight: normal;
         }
         .category {
@@ -33,6 +33,7 @@
             border-bottom: 2px solid #ff0000;
             padding-bottom: 5px;
             font-weight: normal;
+            /* Removed text-transform: uppercase */
         }
         .question {
             margin: 15px 0;
@@ -51,7 +52,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 18px;
-            text-transform: uppercase;
+            /* Removed text-transform: uppercase */
             font-weight: normal;
         }
         button:hover {
@@ -63,12 +64,13 @@
         }
         .results h2 {
             color: #ff0000;
-            text-transform: uppercase;
+            /* Removed text-transform: uppercase */
             font-weight: normal;
         }
         .results p {
             font-size: 1.2em;
             font-weight: normal;
+            color: #fff; /* Ensured all text is white */
         }
         /* Left-align class */
         .left-align {
@@ -314,25 +316,40 @@
                     bookItem.classList.add('left-align');
                     resultsDiv.appendChild(bookItem);
                 });
-            } else if (totalAffirmativeResponses >= 1 && totalAffirmativeResponses <= 5) {
+            } else {
+                // Display the number of Yes answers per category
+                const categoryYesCounts = {};
+                for (const category of jsonData.categories) {
+                    const categoryName = category.name;
+                    const ratings = categoryRatings[categoryName];
+                    const yesCount = ratings ? ratings.yesCount : 0;
+                    categoryYesCounts[categoryName] = yesCount;
+                }
+
+                const resultHeader = document.createElement('h2');
+                resultHeader.textContent = "Number of 'Yes' answers per category:";
+                resultsDiv.appendChild(resultHeader);
+
+                for (const categoryName in categoryYesCounts) {
+                    const categoryResult = document.createElement('p');
+                    categoryResult.textContent = `${categoryName}: ${categoryYesCounts[categoryName]} Yes answers`;
+                    categoryResult.classList.add('left-align');
+                    resultsDiv.appendChild(categoryResult);
+                }
+
+                // Display appropriate message based on total Yes answers
                 const messageHeader = document.createElement('h2');
-                messageHeader.textContent = "You have some beliefs that could be considered traits of toxic masculinity. It's so entrenched in American culture that it can be hard to avoid. Here are some book selections to break free from toxic masculinity:";
-                messageHeader.style.fontWeight = 'bold';
+                messageHeader.classList.add('bold-text');
+
+                if (totalYesCount >= 1 && totalYesCount <= 5) {
+                    messageHeader.textContent = "You have some beliefs that could be considered traits of toxic masculinity. It's so entrenched in American culture that it can be hard to avoid. Here are some book selections to break free from toxic masculinity:";
+                } else if (totalYesCount >= 6) {
+                    messageHeader.textContent = "You have many beliefs that could be considered toxic masculinity and may view these traits as a part of your core values. Consider these book suggestions to learn about the impact of toxic masculinity on society and how you can break free from it:";
+                }
+
                 resultsDiv.appendChild(messageHeader);
 
-                const recommendedBooks = getRandomItems(books, 3);
-                recommendedBooks.forEach(book => {
-                    const bookItem = document.createElement('p');
-                    bookItem.textContent = book;
-                    bookItem.classList.add('left-align');
-                    resultsDiv.appendChild(bookItem);
-                });
-            } else if (totalAffirmativeResponses >= 6) {
-                const messageHeader = document.createElement('h2');
-                messageHeader.textContent = "You have many beliefs that could be considered toxic masculinity and may view these traits as a part of your core values. Consider these book suggestions to learn about the impact of toxic masculinity on society and how you can break free from it:";
-                messageHeader.style.fontWeight = 'bold';
-                resultsDiv.appendChild(messageHeader);
-
+                // Recommend books
                 const recommendedBooks = getRandomItems(books, 3);
                 recommendedBooks.forEach(book => {
                     const bookItem = document.createElement('p');
